@@ -1,4 +1,4 @@
-# Disables firstrunCustomize for Internet Explorer
+# (1) Disables firstrunCustomize for Internet Explorer
 # (to prevent failure if IE hasn't ever been launched)
 # ------------------------
 $registryPath = "HKCU:\Software\Policies\Microsoft\Internet Explorer\Main\"
@@ -8,11 +8,17 @@ $value = 1
 New-Item -Path $registryPath -Name $name -Value $value -force
 
 
-# Downloads latest Dell Command | Update
+
+
+
+# (2) Downloads latest Dell Command | Update
 # ------------------------
-$base_url = "http://www.dell.com/support/home/us/en/19/Drivers/DriversDetails?driverId=FXD2R"
-$version_history = (Invoke-WebRequest -Uri $base_url )
-$version_history.links[1] | Where innerText -like "*.*.*,A**"
+# This link leads to a non-current version of Dell Command | Update. This way
+#   we can grab a direct link to the latest version under "Other Versions"
+$oldDellCommandUpdate = "http://www.dell.com/support/home/us/en/19/Drivers/DriversDetails?driverId=FXD2R"
+
+
+$version_list = (Invoke-WebRequest -Uri $base_url ) | Where innerText -like "*.*.*,A**"
 #$latest_executable = $links | Where outerText -eq "Other Versions" | Select-Object
 #$specific_url = $links | Where outerText -eq "Download File" | Select-Object -Expand href
 #Invoke-WebRequest -Uri $specific_url -outFile "dellCommandUpdate.exe"
