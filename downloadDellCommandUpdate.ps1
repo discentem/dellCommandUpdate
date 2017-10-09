@@ -15,6 +15,7 @@ New-Item -Path $registryPath -Name $name -Value $value -force
 # ------------------------
 # This link leads to a non-current version of Dell Command | Update. This way
 #   we can grab a direct link to the latest version under "Other Versions"
+#   and be future proof.
 $oldDellCommandUpdate = "http://www.dell.com/support/home/us/en/19/Drivers/DriversDetails?driverId=FXD2R"
 
 
