@@ -11,7 +11,7 @@ From http://www.dell.com/support/article/us/en/19/how10760/Dell_Command_%7C_Upda
 
 ### Future script enhancements
 
-- Change `$parent_url` to a page which contains a true listing of all DCU versions
+- ~~Change `$parent_url` to a page which contains a true listing of all DCU versions~~ Thanks https://github.com/Gyrferret!!
 - Silently install, as per: http://www.dell.com/support/manuals/us/en/19/dell-command-update-v2.3/dcu_ug_2.3/silent-installation?guid=guid-72c8f511-c7a5-4729-bf86-f92837841289&lang=en-us
 - Verify integrity of download
 - Create a version for Chocolatey https://chocolatey.org/
