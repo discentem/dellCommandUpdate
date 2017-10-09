@@ -10,7 +10,9 @@ New-Item -Path $registryPath -Name $name -Value $value -force
 
 # Downloads latest Dell Command | Update
 # ------------------------
-$parent_url = "http://www.dell.com/support/home/us/en/19/drivers/driversdetails?driverId=X79N4"
-$links = (Invoke-WebRequest -Uri $parent_url ).Links
-$specific_url = $links | Where outerText -eq "Download File" | Select-Object -Expand href
-Invoke-WebRequest -Uri $specific_url -outFile "dellCommandUpdate.exe"
+$base_url = "http://www.dell.com/support/home/us/en/19/Drivers/DriversDetails?driverId=FXD2R"
+$version_history = (Invoke-WebRequest -Uri $base_url )
+$version_history.links[1] | Where innerText -like "*.*.*,A**"
+#$latest_executable = $links | Where outerText -eq "Other Versions" | Select-Object
+#$specific_url = $links | Where outerText -eq "Download File" | Select-Object -Expand href
+#Invoke-WebRequest -Uri $specific_url -outFile "dellCommandUpdate.exe"
