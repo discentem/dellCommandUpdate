@@ -2,6 +2,15 @@
 
 This Powershell script downloads latest the version of `Dell Command | Update` from http://www.dell.com/support/home/us/en/19/drivers/driversdetails?driverId=X79N4
 
+### Usage
+
+Launch Powershell as an administrator.
+Execute `set-executionpolicy bypass`. Select `[A] Yes to all`.
+Navigate to the directoy where you downloaded/cloned this repository. 
+Execute `.\downloadDellCommandUpdate.ps1`. The installer will be downloaded in the same directory where the script lives.
+Manually install after complete.
+
+
 ### Description of Dell Command | Update
 
 From http://www.dell.com/support/article/us/en/19/how10760/Dell_Command_%7C_Update:
