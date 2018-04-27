@@ -6,7 +6,7 @@ These scripts download the latest version of `Dell Command | Update` from http:/
 
 #### downloadDellCommandUpdate.py (Note: this script is incomplete)
 
-Requires Python2 at the present time.
+Written for Python3.
 
 `python downloadDellCommandUpdate.py`
 
