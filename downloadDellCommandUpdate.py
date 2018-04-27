@@ -23,8 +23,8 @@ for link in links:
             copy_link = False
             break
     elif copy_link == True:
-        text = link.text.strip()
-        other_versions[text] = "www.dell.com{0}".format(link['href'])
+        link_text = link.text.strip()
+        other_versions[link_text] = "www.dell.com{0}".format(link['href'])
 
 for key, val in other_versions.items():
     print(key, val)
