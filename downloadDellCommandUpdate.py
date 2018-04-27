@@ -11,7 +11,6 @@ resp = urllib.request.urlopen(request)
 
 content = BeautifulSoup(resp.read(), 'lxml')
 links = content.find_all('a', href=True)
-# print links
 
 other_versions = OrderedDict()
 copy_link = False
