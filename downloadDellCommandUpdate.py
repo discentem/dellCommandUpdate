@@ -3,30 +3,40 @@ import pprint
 from collections import OrderedDict
 from bs4 import BeautifulSoup
 
-base_url = "http://www.dell.com/support/home/us/en/19/Drivers/DriversDetails?driverId=FXD2R"
+def getDellCommandUpdateVersions():
+    base_url = "https://www.dell.com/support/home/us/en/19/Drivers/DriversDetails?driverId=DDVDP"
+    #hdr = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36'}
+    request = urllib.request.Request(base_url)#, headers=hdr)
+    resp = urllib.request.urlopen(request, timeout = 30)
+    content = BeautifulSoup(resp.read(), 'lxml')
+    links = content.find_all('a', href=True)
+    other_versions = OrderedDict()
+    copy_link = False
+    for link in links:
+        if link.has_attr('id'):
+            if link['id'] == "OtherVersions":
+                copy_link = True
+                continue
+            elif link['id'] == "SupportedSystems":
+                copy_link = False
+                break
+        elif copy_link == True:
+            link_text = link.text.strip()
+            other_versions[link_text] = "www.dell.com{0}".format(link['href'])
+    return other_versions
 
-hdr = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36'}
-request = urllib.request.Request(base_url, headers=hdr)
-resp = urllib.request.urlopen(request)
+def getDCUDirectDownloadLink(page_url):
+    request = urllib.request.Request('https://{0}'.format(page_url))
+    response = urllib.request.urlopen(request, timeout=30)
+    content = BeautifulSoup(response.read(), 'lxml')
+    links = content.find_all('a', href=True)
+    for link in links:
+        if link.text == "Download File":
+            return link['href']
 
-content = BeautifulSoup(resp.read(), 'lxml')
-links = content.find_all('a', href=True)
+    return None
 
-other_versions = OrderedDict()
-copy_link = False
-for link in links:
-    if link.has_attr('id'):
-        if link['id'] == "OtherVersions":
-            copy_link = True
-            continue
-        elif link['id'] == "SupportedSystems":
-            copy_link = False
-            break
-    elif copy_link == True:
-        link_text = link.text.strip()
-        other_versions[link_text] = "www.dell.com{0}".format(link['href'])
-
-for key, val in other_versions.items():
-    print(key, val)
-latest_dcu = list(other_versions)[0]
-print(latest_dcu)
+dcuVersions = getDellCommandUpdateVersions()
+latest_dcu = list(dcuVersions)[0]
+latest_dcu_webpage = dcuVersions[latest_dcu]
+print(getDCUDirectDownloadLink(latest_dcu_webpage))
